@@ -1,0 +1,108 @@
+<template>
+    <lightning-card title="Accounts Table" icon-name="standard:accounts">
+      <!-- <template if:true={btnVisible}>
+        <div class="slds-m-vertical_medium">
+            These are the details!
+        </div>
+    </template> -->
+      <div class="btn-delete">
+        <lightning-button class="slds-button slds-button_destructive" label="Delete" variant="Destructive"
+          onclick={handleModal}></lightning-button> 
+    </div>
+
+      <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid" aria-label="Table of Accounts">
+
+          <thead>
+            <tr >
+              <th class="slds-text-align_right slds-cell_action-mode" scope="col" style="width:3.25rem">
+                <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
+                <div class="slds-th__action slds-th__action_form">
+                  <div class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-unique-id-297" value="checkbox-unique-id-297" tabindex="0" aria-labelledby="check-select-all-label column-group-header" />
+                    <label class="slds-checkbox__label" for="checkbox-unique-id-297" id="check-select-all-label">
+                      <span class="slds-checkbox_faux"></span>
+                      <span class="slds-form-element__label slds-assistive-text">Select All</span>
+                    </label>
+                  </div>
+                </div>
+              </th>
+              <th>Account Name</th>
+              <th>Phone</th>
+              <th>Annual Revenue</th>
+            </tr>
+          </thead>
+
+          <tbody aria-multiselectable="true">
+            <template for:each={accounts.data} for:item="account">
+              <tr aria-multiselectable="true" key={account.Id}>
+                <td class="slds-text-align_right slds-cell_action-mode" role="gridcell">
+                  <lightning-input type="checkbox" label="" name={account.Id}
+                    onchange={getAccIds}>
+                  </lightning-input>
+                  <!-- <div class="slds-checkbox">
+                    <input type="checkbox" name="options" id={account.Id} onchange={getAccIds}/>
+                    <label class="slds-checkbox__label" for="checkbox-01" id={account.Id}>
+                      <span class="slds-checkbox_faux"></span>
+                      <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
+                    </label> 
+                  </div>-->
+                </td>
+                <td>{account.Name}</td>
+                <td>{account.Phone}</td>
+                <td>{account.AnnualRevenue}</td>
+              </tr>
+          </template>
+        <!--
+            <tr>
+              <td class="slds-text-align_right slds-cell_action-mode" role="gridcell">
+                <div class="slds-checkbox">
+                  <input type="checkbox" name="options" id="checkbox-02" value="checkbox-02" tabindex="0" aria-labelledby="check-button-label-02 column-group-header" checked="" />
+                  <label class="slds-checkbox__label" for="checkbox-02" id="check-button-label-02">
+                    <span class="slds-checkbox_faux"></span>
+                    <span class="slds-form-element__label slds-assistive-text">Select item 2</span>
+                  </label>
+                </div>
+              </td>
+              <td>Centro comercial Moctezuma</td>
+              <td>Francisco Chang</td>
+              <td>Mexico</td>
+            </tr>
+            -->
+          </tbody>
+
+          </table>
+          
+          <template if:true={isModalOpen}>
+            <!-- Modal/Popup Box LWC starts here -->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                            onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{accName}
+                        </h2>
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        
+                        <p><b>Are you sure you want to delete {accName} account record ? 
+                            </b></p>
+                    </div>
+                   
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick={deleteAccount} value={accId} title="Delete">Delete</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </lightning-card>
+</template>
